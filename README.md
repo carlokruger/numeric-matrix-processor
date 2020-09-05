@@ -131,7 +131,7 @@ Output:
 ### Description
 The next stage is the multiplication of matrices. This operation is a little more complex because it’s not enough to simply multiply the corresponding elements.
 
-Unlike with addition, the sizes of the matrices can be different: the only restriction is that the number of columns in the first matrix equal the number of rows for the second matrix. Check out a comprehensive video by 3Blue1Brown about matrix multiplication.
+Unlike with addition, the sizes of the matrices can be different: the only restriction is that the number of columns in the first matrix equal the number of rows for the second matrix. Check out a comprehensive video by [3Blue1Brown](https://youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=5) about matrix multiplication.
 
 The multiplication of A matrix with n rows and m columns and B matrix with m rows and k columns is Cn,k=An,m×Bm,k.
 
