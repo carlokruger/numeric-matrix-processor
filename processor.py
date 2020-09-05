@@ -43,7 +43,15 @@ def print_menu():
     print("1. Add matrices")
     print("2. Multiply matrix by a constant")
     print("3. Multiply matrices")
+    print("4. Transpose matrix")
     print("0. Exit")
+
+
+def print_sub_menu():
+    print("1. Main diagonal")
+    print("2. Side diagonal")
+    print("3. Vertical line")
+    print("4. Horizontal line")
 
 
 def add_matrices(A, B):
@@ -78,6 +86,18 @@ def matrix_multiply(A, B):
             C[i][j] = total
 
     return C
+
+
+def transpose_matrix(M, a):
+    if a == "1":
+        rows = len(M)
+        cols = len(M[0])
+        MT = zeros_matrix(cols, rows)
+
+        for i in range(rows):
+            for j in range(cols):
+                MT[j][i] = M[i][j]
+        return MT
 
 
 while True:
@@ -128,3 +148,14 @@ while True:
         else:
             print_matrix(matrix_multiply(X, Y))
             print()
+
+    elif action == "4":
+        print()
+        print_sub_menu()
+        type = input("Your choice:")
+        print("Enter matrix size:")
+        a = get_matrix_size()
+        print("Enter matrix size:")
+        X = get_matrix(a)
+        print_matrix(transpose_matrix(X, type))
+        print()
