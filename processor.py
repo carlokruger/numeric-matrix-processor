@@ -44,6 +44,7 @@ def print_menu():
     print("2. Multiply matrix by a constant")
     print("3. Multiply matrices")
     print("4. Transpose matrix")
+    print("5. Calculate a determinant")
     print("0. Exit")
 
 
@@ -120,6 +121,7 @@ def transpose_matrix_vertical(M):
             MT[i][j] = M[i][cols - 1 - j]
     return MT
 
+
 def transpose_matrix_horizontal(M):
     rows = len(M)
     cols = len(M[0])
@@ -130,6 +132,22 @@ def transpose_matrix_horizontal(M):
             MT[i][j] = M[rows - 1 - i][j]
 
     return MT
+
+
+def calc_determinant(matrix):
+    size = len(matrix[0])
+    if size == 1:
+        return matrix[0][0]
+    elif size == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    elif size > 2:
+        c = [[0.0 for _ in range(size - 1)] for _ in range(size - 1)]
+        det = 0
+        for j in range(size):
+            for i in range(size - 1):
+                c[i] = matrix[i + 1][0:j] + matrix[i + 1][j + 1:]
+            det += pow(-1, 1 + j + 1) * matrix[0][j] * calc_determinant(c)
+        return det
 
 
 while True:
@@ -200,4 +218,17 @@ while True:
             print()
         elif type == "4":
             print_matrix(transpose_matrix_horizontal(X))
+            print()
+
+    elif action == "5":
+        print("Enter matrix size:")
+        a = get_matrix_size()
+        print("Enter matrix:")
+        X = get_matrix(a)
+        if a[0] == a[1]:
+            print("The result is:")
+            print(calc_determinant(X))
+            print()
+        else:
+            print("The operation cannot be performed.")
             print()
