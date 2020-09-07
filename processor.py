@@ -13,7 +13,7 @@ def get_matrix_size():
 def get_matrix(size):
     matrix = []
     for _ in range(size[0]):
-        matrix.append([int(val) if val.isdigit() else float(val) for val in input().split()])
+        matrix.append([int(val) if val.isdigit() or (val.find("-") != -1 and val.find(".") == -1) else float(val) for val in input().split()])
     return matrix
 
 
@@ -88,16 +88,48 @@ def matrix_multiply(A, B):
     return C
 
 
-def transpose_matrix(M, a):
-    if a == "1":
-        rows = len(M)
-        cols = len(M[0])
-        MT = zeros_matrix(cols, rows)
+def transpose_matrix(M):
+    rows = len(M)
+    cols = len(M[0])
+    MT = zeros_matrix(cols, rows)
 
-        for i in range(rows):
-            for j in range(cols):
-                MT[j][i] = M[i][j]
-        return MT
+    for i in range(rows):
+        for j in range(cols):
+            MT[j][i] = M[i][j]
+    return MT
+
+
+def transpose_matrix_side(M):
+    rows = len(M)
+    cols = len(M[0])
+    MT = zeros_matrix(cols, rows)
+
+    for i in range(rows):
+        for j in range(cols):
+            MT[i][j] = M[rows - 1 - j][cols - 1 - i]
+    return MT
+
+
+def transpose_matrix_vertical(M):
+    rows = len(M)
+    cols = len(M[0])
+    MT = zeros_matrix(cols, rows)
+
+    for i in range(rows):
+        for j in range(cols):
+            MT[i][j] = M[i][cols - 1 - j]
+    return MT
+
+def transpose_matrix_horizontal(M):
+    rows = len(M)
+    cols = len(M[0])
+    MT = zeros_matrix(cols, rows)
+
+    for i in range(rows):
+        for j in range(cols):
+            MT[i][j] = M[rows - 1 - i][j]
+
+    return MT
 
 
 while True:
@@ -155,7 +187,17 @@ while True:
         type = input("Your choice:")
         print("Enter matrix size:")
         a = get_matrix_size()
-        print("Enter matrix size:")
+        print("Enter matrix:")
         X = get_matrix(a)
-        print_matrix(transpose_matrix(X, type))
-        print()
+        if type == "1":
+            print_matrix(transpose_matrix(X))
+            print()
+        elif type == "2":
+            print_matrix(transpose_matrix_side(X))
+            print()
+        elif type == "3":
+            print_matrix(transpose_matrix_vertical(X))
+            print()
+        elif type == "4":
+            print_matrix(transpose_matrix_horizontal(X))
+            print()
