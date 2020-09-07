@@ -45,6 +45,7 @@ def print_menu():
     print("3. Multiply matrices")
     print("4. Transpose matrix")
     print("5. Calculate a determinant")
+    print("6. Inverse matrix")
     print("0. Exit")
 
 
@@ -150,6 +151,32 @@ def calc_determinant(matrix):
         return det
 
 
+def getMatrixMinor(m,i,j):
+    return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
+
+
+def getMatrixInverse(m):
+    determinant = calc_determinant(m)
+    #special case for 2x2 matrix:
+    if len(m) == 2:
+        return [[m[1][1]/determinant, -1*m[0][1]/determinant],
+                [-1*m[1][0]/determinant, m[0][0]/determinant]]
+
+    #find matrix of cofactors
+    cofactors = []
+    for r in range(len(m)):
+        cofactorRow = []
+        for c in range(len(m)):
+            minor = getMatrixMinor(m,r,c)
+            cofactorRow.append(((-1)**(r+c)) * calc_determinant(minor))
+        cofactors.append(cofactorRow)
+    cofactors = transpose_matrix(cofactors)
+    for r in range(len(cofactors)):
+        for c in range(len(cofactors)):
+            cofactors[r][c] = cofactors[r][c]/determinant
+    return cofactors
+
+
 while True:
     print_menu()
     action = input("Your choice:")
@@ -230,5 +257,25 @@ while True:
             print(calc_determinant(X))
             print()
         else:
+            print("The operation cannot be performed.")
+            print()
+
+    elif action == "6":
+        print("Enter matrix size:")
+        a = get_matrix_size()
+        print("Enter matrix:")
+        X = get_matrix(a)
+        determinant = calc_determinant(X)
+
+        if determinant == 0:
+            print("This matrix doesn't have an inverse.")
+            print()
+
+        elif a[0] == a[1]:
+            print("The result is:")
+            print_matrix(getMatrixInverse(X))
+            print()
+
+        elif a[0] != a[1]:
             print("The operation cannot be performed.")
             print()
